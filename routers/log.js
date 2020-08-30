@@ -14,8 +14,7 @@ router.get('/logs/all/', async (req, res, next) => {
 })
 
 router.post('/logs/new/', async (req, res, next) => {
-	//console.log(req)
-	console.log(`body: ${req.body}`)
+	// console.log(`body: ${req.body}`)
 	try {
 		const activity = req.body.activity
 		const emotions = req.body.emotions
