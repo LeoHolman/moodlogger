@@ -26,7 +26,7 @@ var App = () => {
 		var data = {
 			'activity': activity,
 			'emotions': [],
-			'time': `${date}T${time}-0500`,
+			'time': `${date}T${time}-0400`,
 			'depression_intensity': depressionIntensity.toString()
 		}
 		try {
