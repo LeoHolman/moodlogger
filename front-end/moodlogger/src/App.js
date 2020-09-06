@@ -3,7 +3,7 @@ import './App.css';
 
 var App = () => {
 	const [activity, setActivity] = useState("");
-	const [emotions, setEmotions] = useState("");
+	const [emotions, setEmotions] = useState([]);
 	const [date, setDate] = useState("");
 	const [time, setTime] = useState("");
 	const [depressionIntensity, setDepressionIntensity] = useState("");
@@ -48,6 +48,13 @@ var App = () => {
 		})
 	}, [])
 
+	function addEmotion(event ){
+		event.preventDefault();
+		const newEmotion = event.target.getAttribute('dataemotion')
+		const newEmotions = [...emotions, newEmotion]
+		setEmotions(newEmotions)
+	}
+
 	return (
 	<div className="App">
 		<datalist id="tickmarks">
@@ -73,7 +80,10 @@ var App = () => {
 					onChange={e => setActivity(e.target.value)} />
 				<div id="emotions-list">
 					{ emotionsList.map( (emotion) => 
-						<button key={emotion._id} id={emotion.name}>{emotion.name}</button>
+						<button key={emotion._id}
+								onClick={addEmotion}
+								dataemotion={emotion.name}
+						 		id={emotion.name}>{emotion.name}</button>
 					)}
 
 				</div>
