@@ -5,6 +5,9 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = 8000 
 
+const logRouter = require('./routers/log')
+const emotionsRouter = require('./routers/emotion')
+
 app.use(bodyParser.json())
 
 app.use((req, res, next) => {
@@ -15,13 +18,13 @@ app.use((req, res, next) => {
 });
 
 mongoose.connect('mongodb://localhost:27017/moodlogs', {useNewUrlParser: true, usUnifiedTopology: true})
-const logRouter = require('./routers/log')
 
 app.get('/', (req, res) => {
 	res.send('Hello world!')
 })
 
 app.use(logRouter)
+app.use(emotionsRouter)
 
 
 app.listen(port, () => { 
