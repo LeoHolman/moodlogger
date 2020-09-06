@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
 var App = () => {
@@ -8,6 +7,8 @@ var App = () => {
 	const [date, setDate] = useState("");
 	const [time, setTime] = useState("");
 	const [depressionIntensity, setDepressionIntensity] = useState("");
+	const [emotionsList, setEmotionsList] = useState([]);
+
 	async function sendData(data){
 		const response = await fetch(
 			'http://localhost:8000/logs/new',
@@ -38,6 +39,15 @@ var App = () => {
 		}
 	}
 
+	useEffect(  () => {
+		fetch('http://localhost:8000/emotions/all')
+		.then(response => response.json())
+		.then(allEmotions => {
+			setEmotionsList(allEmotions)
+			console.log(allEmotions)
+		})
+	}, [])
+
 	return (
 	<div className="App">
 		<datalist id="tickmarks">
@@ -61,6 +71,12 @@ var App = () => {
 					name="activity"
 					value={activity}
 					onChange={e => setActivity(e.target.value)} />
+				<div id="emotions-list">
+					{ emotionsList.map( (emotion) => 
+						<button key={emotion._id} id={emotion.name}>{emotion.name}</button>
+					)}
+
+				</div>
 				<label htmlFor="emotions">Emotions</label>
 				<input type="text" name="emotions" value={emotions}
 					onChange = {e => setEmotions(e.target.value)}/>
