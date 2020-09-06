@@ -1,5 +1,6 @@
 const express = require('express')
 const Log = require('../models/log')
+const Emotion = require('../models/emotion')
 
 const router = new express.Router()
 
@@ -17,7 +18,8 @@ router.post('/logs/new/', async (req, res, next) => {
 	// console.log(`body: ${req.body}`)
 	try {
 		const activity = req.body.activity
-		const emotions = req.body.emotions
+		const emotionsRaw = req.body.emotions
+		const emotions = Emotion.find( {name: { $in: emotionsRaw}})
 		const time = req.body.time
 		const depression_intensity = req.body.depression_intensity
 		const newLog = new Log({activity, emotions, time, depression_intensity})
